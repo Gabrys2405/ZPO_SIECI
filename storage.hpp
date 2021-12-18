@@ -7,19 +7,22 @@
 
 #include <vector>
 #include <list>
+#include "types.hpp"
 
 
-using element_id = unsigned int; // Dla uproszczenia(<<primitive>> )
-using pack = std::list<int>; //Wydaje mi się że ta kolejka elementów ma byc kolejką ID ale pewności nie mam
-
+using element_id = unsigned int; //
+using pack = std::list<element_id>; //Wydaje mi się że ta kolejka elementów ma byc kolejką ID ale pewności nie mam
+enum class queue_type{
+    LIFO,FIFO
+};
 class Package{
 public:
-    Package(const element_id id): ElementID(id) {}
+    Package(const ElementID id): ID(id) {}
 
-    element_id get_id() const {return ElementID;};
+    element_id get_id() const {return ID;};
     ~ Package() = default;//????
 private:
-    element_id ElementID;
+     ElementID ID;
 
 
 
@@ -32,12 +35,18 @@ public:
     using const_iterator = std::list<Package>::const_iterator;
 
 
-    virtual void push(Package&&);
+    virtual void push(pack&& Package);//???
     virtual void push();
+//    const_iterator it_cbegin1 = Package.begin();
+//    const_iterator it_cbegin2 = Package.cbegin();
+//    const_iterator it_cend1 = Package.end();
+//    const_iterator it_cend2 = Package.cend();??????????
+
     virtual std::size_t size();
     virtual bool empty();
     virtual ~IPackageStockpile() = default;//????
 private:
+    pack Package;//???
 
 
 
