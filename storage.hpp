@@ -10,8 +10,8 @@
 #include "types.hpp"
 
 
-using element_id = unsigned int; //
-using pack = std::list<element_id>; //Wydaje mi się że ta kolejka elementów ma byc kolejką ID ale pewności nie mam
+
+using pack = std::list<ElementID>; //Nwm co ta kolejka ma zawierać...
 enum class queue_type{
     LIFO,FIFO
 };
@@ -19,7 +19,7 @@ class Package{
 public:
     Package(const ElementID id): ID(id) {}
 
-    element_id get_id() const {return ID;};
+    ElementID get_id() const {return ID;};
     ~ Package() = default;//????
 private:
      ElementID ID;
