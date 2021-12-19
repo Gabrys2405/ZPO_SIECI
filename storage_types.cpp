@@ -1,12 +1,9 @@
 //
-// Created by majga on 15.12.2021.
+// Created by majga on 19.12.2021.
 //
+#include "storage_types.hpp"
 
-
-#include "storage.hpp"
-#include "types.hpp"
-
-Package IPackageQueue::pop() {
+Package PackageQueue::pop() {
     throw;
     //return pack();//TODO;
 }
@@ -24,8 +21,3 @@ std::size_t PackageQueue::size() {
 bool PackageQueue::empty() {
     throw;//TODO;
 }
-
-
-
-
-

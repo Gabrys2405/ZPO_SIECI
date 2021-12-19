@@ -1,32 +1,16 @@
 //
-// Created by majga on 15.12.2021.
+// Created by majga on 19.12.2021.
 //
 
-#ifndef ZPO_SIECI_STORAGE_HPP
-#define ZPO_SIECI_STORAGE_HPP
-
-
+#ifndef ZPO_SIECI_STORAGE_TYPES_HPP
+#define ZPO_SIECI_STORAGE_TYPES_HPP
+#include "package.hpp"
 #include <list>
-#include "types.hpp"
 
 
-
-
-class Package{
-public:
-    Package(){};
-    Package(const ElementID id): ID(id) {}
-    Package(Package&&){};
-    ElementID get_id() const {return ID;};
-    ~ Package(){};
-private:
-     ElementID ID;
-
-
-
+enum class PackageQueueType{
+    LIFO,FIFO
 };
-
-
 
 
 class IPackageStockpile{
@@ -60,22 +44,14 @@ public:
 class PackageQueue : public IPackageQueue{
 public:
     PackageQueue(PackageQueueType type):queueType(type){}
-    Package pop(){throw;}  //TODO;
-    PackageQueueType get_queue_type() { return queueType; }; //TODO;
+    Package pop(); //TODO;
+    PackageQueueType get_queue_type() { return queueType; };
     void push(Package&&);
     std::size_t size();
     bool empty();
 
 private:
-PackageQueueType queueType;
+    PackageQueueType queueType;
 };
 
-
-
-
-
-
-
-
-
-#endif //ZPO_SIECI_STORAGE_HPP
+#endif //ZPO_SIECI_STORAGE_TYPES_HPP

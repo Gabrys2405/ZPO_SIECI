@@ -6,7 +6,10 @@
 #define ZPO_SIECI_TYPES_HPP
 #include <set>
 using ElementID = unsigned int;
-class IDs {
+
+
+
+class IDs {///nwm gdzie to dać i czy wgl jest potrzebne
 public:
     IDs() = default;
     ~IDs() = default;
@@ -15,9 +18,7 @@ private:
     static std::set<ElementID> freed_IDs; // kiedyś użyte ale obecnie zwolnione ID
 
 };
-enum class PackageQueueType{
-    LIFO,FIFO
-};
+
 
 
 
