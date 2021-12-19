@@ -6,28 +6,26 @@
 #include "storage.hpp"
 #include "types.hpp"
 
-pack IPackageQueue::pop() {
+Package IPackageQueue::pop() {
     throw;
-    //return pack();
+    //return pack();//TODO;
 }
 
-//int IPackageQueue::get_queue_type() {
-  //  return 0;
-}
-
-void IPackageStockpile::push() {
+void PackageQueue::push(Package&&) {
     throw;
+    //TODO
 
 }
 
-std::size_t IPackageStockpile::size() {
-    throw;
+std::size_t PackageQueue::size() {
+    throw;//TODO;
 }
 
-bool IPackageStockpile::empty() {
-    throw;
+bool PackageQueue::empty() {
+    throw;//TODO;
 }
 
-void IPackageStockpile::push(Package &&) {
-    throw;
-}
+
+
+
+

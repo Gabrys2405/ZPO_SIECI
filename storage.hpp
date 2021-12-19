@@ -5,22 +5,20 @@
 #ifndef ZPO_SIECI_STORAGE_HPP
 #define ZPO_SIECI_STORAGE_HPP
 
-#include <vector>
+
 #include <list>
 #include "types.hpp"
 
 
 
-using pack = std::list<ElementID>; //Nwm co ta kolejka ma zawierać...
-enum class queue_type{
-    LIFO,FIFO
-};
+
 class Package{
 public:
+    Package(){};
     Package(const ElementID id): ID(id) {}
-
+    Package(Package&&){};
     ElementID get_id() const {return ID;};
-    ~ Package() = default;//????
+    ~ Package(){};
 private:
      ElementID ID;
 
@@ -30,43 +28,48 @@ private:
 
 
 
+
 class IPackageStockpile{
 public:
     using const_iterator = std::list<Package>::const_iterator;
 
 
-    virtual void push(pack&& Package);//???
-    virtual void push();
-//    const_iterator it_cbegin1 = Package.begin();
-//    const_iterator it_cbegin2 = Package.cbegin();
-//    const_iterator it_cend1 = Package.end();
-//    const_iterator it_cend2 = Package.cend();??????????
+    virtual void push(Package&&) = 0;//???
+//    const_iterator it_cbegin1 = ?????.begin();TODO;
+//    const_iterator it_cbegin2 = ?????.cbegin();
+//    const_iterator it_cend1 = ?????.end();
+//    const_iterator it_cend2 = ?????.cend();??????????
 
-    virtual std::size_t size();
-    virtual bool empty();
-    virtual ~IPackageStockpile() = default;//????
-private:
-    pack Package;//???
+    virtual std::size_t size() = 0;
+    virtual bool empty() = 0;
+    virtual ~IPackageStockpile(){};//????
+
+
 
 
 
 
 };
-class IPackageQueue : public IPackageStockpile{  //?????
+class IPackageQueue: public IPackageStockpile{  //?????
 public:
-    virtual pack pop();
-    //virtual  get_queue_type();
-private:
-pack Package;
+    virtual Package pop() = 0;//wyciąganie półproduktu z kolejki w zależności od rodzaju kolejki
+    virtual PackageQueueType  get_queue_type() = 0; //identyfikacja typu kolejki FIFO/LIFO
+
 };
 
-class PackageQueue{
+class PackageQueue : public IPackageQueue{
 public:
-
+    PackageQueue(PackageQueueType type):queueType(type){}
+    Package pop(){throw;}  //TODO;
+    PackageQueueType get_queue_type() { return queueType; }; //TODO;
+    void push(Package&&);
+    std::size_t size();
+    bool empty();
 
 private:
-
+PackageQueueType queueType;
 };
+
 
 
 
