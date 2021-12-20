@@ -15,8 +15,8 @@ Package PackageQueue::pop() {
     //return result();//TODO;
 }
 
-void PackageQueue::push(Package&& aPackage) {
+void PackageQueue::push(Package&& package) {
 
-    _package_queue.emplace_back(std::move(aPackage));
+    _package_queue.emplace_back(std::move(package));
 }
 

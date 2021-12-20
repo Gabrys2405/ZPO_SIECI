@@ -19,10 +19,11 @@ public:
     using const_iterator = std::list<Package>::const_iterator;
 
 
-    virtual void push(Package&&) = 0;//???
+    virtual void push(Package&&) = 0;
     virtual std::size_t size() = 0;
     virtual bool empty() = 0;
-    virtual ~IPackageStockpile(){};//????
+    virtual ~IPackageStockpile() {}
+
 
 
 
@@ -45,10 +46,8 @@ public:
     void push(Package&&);
     std::size_t size(){return _package_queue.size();};
     bool empty(){return _package_queue.empty();};
-//    const_iterator it_cbegin1 = package_queue.begin();
-//    const_iterator it_cbegin2 = package_queue.rbegin();
-//    const_iterator it_cend1 = package_queue.end();
-//    const_iterator it_cend2 = package_queue.rend();
+
+
 
 private:
     PackageQueueType _queueType;
