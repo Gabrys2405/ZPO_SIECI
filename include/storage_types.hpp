@@ -18,6 +18,10 @@ class IPackageStockpile{
 public:
     using const_iterator = std::list<Package>::const_iterator;
 
+    virtual const_iterator begin() const = 0;
+    virtual const_iterator cbegin() const = 0;
+    virtual const_iterator end() const = 0;
+    virtual const_iterator cend() const = 0;
 
     virtual void push(Package&&) = 0;
     virtual std::size_t size() = 0;
@@ -46,7 +50,10 @@ public:
     void push(Package&&);
     std::size_t size(){return _package_queue.size();};
     bool empty(){return _package_queue.empty();};
-
+    const_iterator begin() const override {return _package_queue.cbegin();}
+    const_iterator cbegin() const override {return _package_queue.cbegin();}
+    const_iterator end() const override {return _package_queue.cend();}
+    const_iterator cend() const override {return _package_queue.cend();}
 
 
 private:

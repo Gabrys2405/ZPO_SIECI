@@ -5,6 +5,7 @@
 #ifndef ZPO_SIECI_TYPES_HPP
 #define ZPO_SIECI_TYPES_HPP
 #include <set>
+#include "storage_types.hpp"
 using ElementID = unsigned int;
 
 
