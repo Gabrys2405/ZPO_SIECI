@@ -9,13 +9,14 @@
 class Package{
 public:
     Package(){};
-    Package(const ElementID id): ID(id) {}
-    Package(Package&&){};
-    Package& operator=(Package&&);
-    ElementID get_id() const {return ID;};
+    Package(ElementID id): _id(id) {}
+//    Package(Package&& package):_package(std::move(package)){}
+    Package& operator=(Package&&) = default;
+    ElementID get_id() const {return _id;};
     ~ Package(){};
 private:
-    ElementID ID;
+    ElementID _id;
+
 
 
 

@@ -2,6 +2,6 @@
 // Created by majga on 20.12.2021.
 //
 
-#include "storage_types.hpp"
-#include "package.cpp"
-#include "storage_types.cpp"
+#include "include/storage_types.hpp"
+#include "src/package.cpp"
+#include "src/storage_types.cpp"
