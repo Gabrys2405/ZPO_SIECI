@@ -6,6 +6,7 @@
 #define ZPO_SIECI_STORAGE_TYPES_HPP
 #include "package.hpp"
 #include <list>
+#include <utility>
 
 
 enum class PackageQueueType{
@@ -19,11 +20,6 @@ public:
 
 
     virtual void push(Package&&) = 0;//???
-//    const_iterator it_cbegin1 = ?????.begin();TODO;
-//    const_iterator it_cbegin2 = ?????.cbegin();
-//    const_iterator it_cend1 = ?????.end();
-//    const_iterator it_cend2 = package_queue.cend();??????????
-
     virtual std::size_t size() = 0;
     virtual bool empty() = 0;
     virtual ~IPackageStockpile(){};//????
@@ -48,7 +44,11 @@ public:
     PackageQueueType get_queue_type() { return queueType; };
     void push(Package&&);
     std::size_t size(){return package_queue.size();};
-    bool empty();
+    bool empty(){return package_queue.empty()};
+//    const_iterator it_cbegin1 = package_queue.begin();
+//    const_iterator it_cbegin2 = package_queue.rbegin();
+//    const_iterator it_cend1 = package_queue.end();
+//    const_iterator it_cend2 = package_queue.rend();
 
 private:
     PackageQueueType queueType;
