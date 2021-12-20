@@ -44,7 +44,7 @@ public:
     PackageQueueType get_queue_type() { return queueType; };
     void push(Package&&);
     std::size_t size(){return package_queue.size();};
-    bool empty(){return package_queue.empty()};
+    bool empty(){return package_queue.empty();};
 //    const_iterator it_cbegin1 = package_queue.begin();
 //    const_iterator it_cbegin2 = package_queue.rbegin();
 //    const_iterator it_cend1 = package_queue.end();
