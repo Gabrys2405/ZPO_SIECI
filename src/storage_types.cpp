@@ -5,7 +5,7 @@
 
 Package PackageQueue::pop() {
     if (_queueType == PackageQueueType::LIFO && !_package_queue.empty()){
-//        Package& result = package_queue.front();
+        // Package result = *begin();
         _package_queue.pop_front();
 
     }
