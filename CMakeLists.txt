@@ -13,5 +13,6 @@ set(SOURCE_FILES
         src/simulation.hpp
         )
 
+
 add_compile_options(-Wall -Wextra -Werror -Wpedantic -pedantic-errors -Wconversion)
 add_executable(ZPO_SIECI main.cpp)
