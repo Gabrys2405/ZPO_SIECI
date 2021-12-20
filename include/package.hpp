@@ -10,7 +10,7 @@ class Package{
 public:
     Package(){};
     Package(ElementID id): _id(id) {}
-//    Package(Package&& package):_package(std::move(package)){}
+    Package(Package&&) = default;
     Package& operator=(Package&&) = default;
     ElementID get_id() const {return _id;};
     ~ Package(){};

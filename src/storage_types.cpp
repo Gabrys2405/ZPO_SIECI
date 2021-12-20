@@ -4,19 +4,19 @@
 #include "../include/storage_types.hpp"
 
 Package PackageQueue::pop() {
-    if (queueType == PackageQueueType::LIFO && !package_queue.empty()){
+    if (_queueType == PackageQueueType::LIFO && !_package_queue.empty()){
 //        Package& result = package_queue.front();
-        package_queue.pop_front();
+        _package_queue.pop_front();
 
     }
-    else if(queueType == PackageQueueType::FIFO && !package_queue.empty()) {
-        package_queue.pop_back();
+    else if(_queueType == PackageQueueType::FIFO && !_package_queue.empty()) {
+        _package_queue.pop_back();
     }
     //return result();//TODO;
 }
 
 void PackageQueue::push(Package&& aPackage) {
-    throw;
-    //TODO
+
+    _package_queue.emplace_back(std::move(aPackage));
 }
 

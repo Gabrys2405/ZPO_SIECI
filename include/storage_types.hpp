@@ -39,20 +39,21 @@ public:
 
 class PackageQueue : public IPackageQueue{
 public:
-    PackageQueue(PackageQueueType type):queueType(type){}
+    PackageQueue(PackageQueueType type):_queueType(type){}
     Package pop(); //TODO;
-    PackageQueueType get_queue_type() { return queueType; };
+    PackageQueueType get_queue_type() { return _queueType; };
     void push(Package&&);
-    std::size_t size(){return package_queue.size();};
-    bool empty(){return package_queue.empty();};
+    std::size_t size(){return _package_queue.size();};
+    bool empty(){return _package_queue.empty();};
 //    const_iterator it_cbegin1 = package_queue.begin();
 //    const_iterator it_cbegin2 = package_queue.rbegin();
 //    const_iterator it_cend1 = package_queue.end();
 //    const_iterator it_cend2 = package_queue.rend();
 
 private:
-    PackageQueueType queueType;
-    std::list<Package> package_queue;
+    PackageQueueType _queueType;
+    std::list<Package> _package_queue;
+
 };
 
 #endif //ZPO_SIECI_STORAGE_TYPES_HPP
