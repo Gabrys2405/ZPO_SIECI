@@ -14,41 +14,42 @@ enum class PackageQueueType{
 };
 
 
-class IPackageStockpile{
+class IPackageStockpile {
 public:
     using const_iterator = std::list<Package>::const_iterator;
 
+    virtual const_iterator begin() const = 0;
+    virtual const_iterator cbegin() const = 0;
+    virtual const_iterator end() const = 0;
+    virtual const_iterator cend() const = 0;
 
     virtual void push(Package&&) = 0;//???
     virtual std::size_t size() = 0;
     virtual bool empty() = 0;
-    virtual ~IPackageStockpile(){};//????
-
-
-
-
-
+    virtual ~IPackageStockpile() = default;
 
 };
-class IPackageQueue: public IPackageStockpile{  //?????
+
+class IPackageQueue: public IPackageStockpile {  //?????
 public:
     virtual Package pop() = 0;//wyciąganie półproduktu z kolejki w zależności od rodzaju kolejki
     virtual PackageQueueType  get_queue_type() = 0; //identyfikacja typu kolejki FIFO/LIFO
 
 };
 
-class PackageQueue : public IPackageQueue{
+class PackageQueue : public IPackageQueue {
 public:
-    PackageQueue(PackageQueueType type):queueType(type){}
-    Package pop(); //TODO;
-    PackageQueueType get_queue_type() { return queueType; };
-    void push(Package&&);
-    std::size_t size(){return package_queue.size();};
-    bool empty(){return package_queue.empty();};
-//    const_iterator it_cbegin1 = package_queue.begin();
-//    const_iterator it_cbegin2 = package_queue.rbegin();
-//    const_iterator it_cend1 = package_queue.end();
-//    const_iterator it_cend2 = package_queue.rend();
+    PackageQueue(PackageQueueType type): queueType(type) {}
+    Package pop() override; //TODO;
+    PackageQueueType get_queue_type() override {return queueType;}
+    void push(Package&&) override;
+    std::size_t size() override {return package_queue.size();}
+    bool empty() override {return package_queue.empty();}
+
+    IPackageStockpile::const_iterator begin() const override {return package_queue.cbegin();}
+    IPackageStockpile::const_iterator cbegin() const override {return package_queue.cbegin();}
+    IPackageStockpile::const_iterator end() const override {return package_queue.cend();}
+    IPackageStockpile::const_iterator cend() const override {return package_queue.cend();}
 
 private:
     PackageQueueType queueType;

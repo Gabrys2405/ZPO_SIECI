@@ -10,7 +10,7 @@ set(SOURCE_FILES
         src/helpers.cpp
         src/nodes.cpp
         src/reports.cpp
-        src/simulation.hpp
+        src/simulation.cpp
         )
 
 
