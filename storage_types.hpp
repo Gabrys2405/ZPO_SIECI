@@ -22,7 +22,7 @@ public:
 //    const_iterator it_cbegin1 = ?????.begin();TODO;
 //    const_iterator it_cbegin2 = ?????.cbegin();
 //    const_iterator it_cend1 = ?????.end();
-//    const_iterator it_cend2 = ?????.cend();??????????
+//    const_iterator it_cend2 = package_queue.cend();??????????
 
     virtual std::size_t size() = 0;
     virtual bool empty() = 0;
@@ -47,11 +47,12 @@ public:
     Package pop(); //TODO;
     PackageQueueType get_queue_type() { return queueType; };
     void push(Package&&);
-    std::size_t size();
+    std::size_t size(){return package_queue.size();};
     bool empty();
 
 private:
     PackageQueueType queueType;
+    std::list<Package> package_queue;
 };
 
 #endif //ZPO_SIECI_STORAGE_TYPES_HPP

@@ -8,16 +8,15 @@ Package PackageQueue::pop() {
     //return pack();//TODO;
 }
 
-void PackageQueue::push(Package&&) {
+void PackageQueue::push(Package&& aPackage) {
     throw;
     //TODO
-
 }
-
-std::size_t PackageQueue::size() {
-    throw;//TODO;
-}
-
 bool PackageQueue::empty() {
-    throw;//TODO;
+    if (size() == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
