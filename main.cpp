@@ -5,3 +5,8 @@
 #include "include/storage_types.hpp"
 #include "src/package.cpp"
 #include "src/storage_types.cpp"
+
+
+int main() {
+    return 0;
+}
