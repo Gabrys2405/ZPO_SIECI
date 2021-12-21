@@ -8,14 +8,14 @@
 
 class Package{
 public:
-    Package(){};
+    Package() = default;
     Package(ElementID id): _id(id) {}
-    Package(Package&& package) = default;
-    Package& operator=(Package&&) = default;
+    Package(Package&&) = default;
+    Package& operator= (Package&&);
     ElementID get_id() const {return _id;};
     ~Package() = default;
 private:
-    ElementID _id;
+    ElementID _id{};
     static std::set<ElementID> assigned_IDs; // przydzielone obecnie ID
     static std::set<ElementID> freed_IDs; // kiedyś użyte ale obecnie zwolnione ID
 
