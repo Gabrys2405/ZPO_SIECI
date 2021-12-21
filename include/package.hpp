@@ -8,8 +8,7 @@
 
 class Package{
 public:
-    Package(){};
-    Package(ElementID id): _id(id){
+    Package(){
         if(freed_IDs.empty() && assigned_IDs.empty()){
             _id = 1;
             assigned_IDs.insert(_id);
@@ -37,8 +36,8 @@ public:
 
 
             //TODO Tym razem trzeba znaleźć najmniejsze ID w freed_IDs i ustawić je jako ID a następnie przenieść to ID z freed_IDs do assigned_IDs!!!
-        }
-    }
+        }};
+    Package(ElementID id): _id(id){}
     Package(Package&& package) = default;
     Package& operator=(Package&&) = default;
     ElementID get_id() const {return _id;};
