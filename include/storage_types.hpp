@@ -15,8 +15,7 @@ enum class PackageQueueType{
     LIFO,FIFO
 };
 
-
-class IPackageStockpile{
+class IPackageStockpile {
 public:
     using const_iterator = std::list<Package>::const_iterator;
 
@@ -30,33 +29,29 @@ public:
     virtual bool empty() = 0;
     virtual ~IPackageStockpile() = default;
 
-
-
-
-
-
-
 };
-class IPackageQueue: public IPackageStockpile{  //?????
+
+class IPackageQueue: public IPackageStockpile {
 public:
     virtual Package pop() = 0;//wyciąganie półproduktu z kolejki w zależności od rodzaju kolejki
     virtual PackageQueueType  get_queue_type() = 0; //identyfikacja typu kolejki FIFO/LIFO
 
 };
 
-class PackageQueue : public IPackageQueue{
+class PackageQueue : public IPackageQueue {
 public:
-    PackageQueue(PackageQueueType type):_queueType(type){}
-    Package pop() override; //TODO;
-    PackageQueueType get_queue_type() override { return _queueType; };
-    void push(Package&&) override;
-    std::size_t size() override {return _package_queue.size();};
-    bool empty() override {return _package_queue.empty();};
-    const_iterator begin() const override {return _package_queue.cbegin();}
-    const_iterator cbegin() const override {return _package_queue.cbegin();}
-    const_iterator end() const override {return _package_queue.cend();}
-    const_iterator cend() const override {return _package_queue.cend();}
 
+    PackageQueue(PackageQueueType type): _queueType(type) {}
+    Package pop() override;
+    PackageQueueType get_queue_type() override {return _queueType;}
+    void push(Package&&) override;
+    std::size_t size() override {return _package_queue.size();}
+    bool empty() override {return _package_queue.empty();}
+
+    IPackageStockpile::const_iterator begin() const override {return _package_queue.cbegin();}
+    IPackageStockpile::const_iterator cbegin() const override {return _package_queue.cbegin();}
+    IPackageStockpile::const_iterator end() const override {return _package_queue.cend();}
+    IPackageStockpile::const_iterator cend() const override {return _package_queue.cend();}
 
 private:
     PackageQueueType _queueType;

@@ -3,17 +3,17 @@
 //
 #include "../include/storage_types.hpp"
 
+
 Package PackageQueue::pop() {
     // Wyciąganie elementu z kolejki (usuwanie ze zwracaniem)
     Package result;
-    switch (get_queue_type()) {
+    switch(get_queue_type()) {
+
 
         case PackageQueueType::LIFO :
             result = std::move(_package_queue.back());
             _package_queue.pop_back();
             break;
-
-
 
         case PackageQueueType::FIFO :
             result = std::move(_package_queue.front());
