@@ -4,15 +4,27 @@
 #include "../include/storage_types.hpp"
 
 Package PackageQueue::pop() {
-    if (_queueType == PackageQueueType::LIFO && !_package_queue.empty()){
-        // Package result = *begin();
-        _package_queue.pop_front();
+    // Wyciąganie elementu z kolejki (usuwanie ze zwracaniem)
+    Package result;
+    switch (get_queue_type()) {
+
+        case PackageQueueType::LIFO :
+            result = std::move(_package_queue.back());
+            _package_queue.pop_back();
+            break;
+
+
+
+        case PackageQueueType::FIFO :
+            result = std::move(_package_queue.front());
+            _package_queue.pop_front();
+            break;
+
+        default:
+            break;
 
     }
-    else if(_queueType == PackageQueueType::FIFO && !_package_queue.empty()) {
-        _package_queue.pop_back();
-    }
-    //return result();//TODO;
+    return result;
 }
 
 void PackageQueue::push(Package&& package) {

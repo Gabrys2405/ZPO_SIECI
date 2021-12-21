@@ -45,11 +45,11 @@ public:
 class PackageQueue : public IPackageQueue{
 public:
     PackageQueue(PackageQueueType type):_queueType(type){}
-    Package pop(); //TODO;
-    PackageQueueType get_queue_type() { return _queueType; };
-    void push(Package&&);
-    std::size_t size(){return _package_queue.size();};
-    bool empty(){return _package_queue.empty();};
+    Package pop() override; //TODO;
+    PackageQueueType get_queue_type() override { return _queueType; };
+    void push(Package&&) override;
+    std::size_t size() override {return _package_queue.size();};
+    bool empty() override {return _package_queue.empty();};
     const_iterator begin() const override {return _package_queue.cbegin();}
     const_iterator cbegin() const override {return _package_queue.cbegin();}
     const_iterator end() const override {return _package_queue.cend();}
