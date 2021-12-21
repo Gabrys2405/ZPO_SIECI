@@ -4,7 +4,9 @@
 
 #ifndef ZPO_SIECI_STORAGE_TYPES_HPP
 #define ZPO_SIECI_STORAGE_TYPES_HPP
-#include "package.hpp"
+#include "../include/package.hpp"
+#include"../src/package.cpp"
+#include"../include/types.hpp"
 #include <list>
 #include <utility>
 
@@ -26,7 +28,7 @@ public:
     virtual void push(Package&&) = 0;
     virtual std::size_t size() = 0;
     virtual bool empty() = 0;
-    virtual ~IPackageStockpile() {}
+    virtual ~IPackageStockpile() = default;
 
 
 

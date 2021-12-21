@@ -4,5 +4,5 @@
 
 #ifndef ZPO_SIECI_HELPERS_HPP
 #define ZPO_SIECI_HELPERS_HPP
-
+#include "src/helpers.cpp"
 #endif //ZPO_SIECI_HELPERS_HPP
