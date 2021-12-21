@@ -12,17 +12,18 @@ Package PackageQueue::pop() {
         case PackageQueueType::LIFO :
             result = std::move(_package_queue.back());
             _package_queue.pop_back();
-            return result;
+            break;
 
         case PackageQueueType::FIFO :
             result = std::move(_package_queue.front());
             _package_queue.pop_front();
-            return result;
+            break;
 
         default:
             break;
 
     }
+    return result;
 }
 
 void PackageQueue::push(Package&& package) {
