@@ -8,8 +8,7 @@
 
 class Package{
 public:
-    Package(){};
-    Package(ElementID id): _id(id){
+    Package(){
         if(freed_IDs.empty() && assigned_IDs.empty()){
             _id = 1;
             assigned_IDs.insert(_id);
@@ -33,15 +32,15 @@ public:
             _id = min_id;
             freed_IDs.erase(_id);
             assigned_IDs.insert(_id);
-        }
-    }
+        }};
+    Package(ElementID id): _id(id){}
     Package(Package&& package) = default;
     Package& operator=(Package&&) = default;
     ElementID get_id() const {return _id;};
     ~ Package(){
         assigned_IDs.erase(_id);
         freed_IDs.insert(_id);
-    }
+    };
 private:
     ElementID _id;
     static std::set<ElementID> assigned_IDs; // przydzielone obecnie ID
