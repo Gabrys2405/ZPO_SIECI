@@ -29,7 +29,7 @@ public:
 
 };
 
-class IPackageQueue: public IPackageStockpile {  //?????
+class IPackageQueue: public IPackageStockpile {
 public:
     virtual Package pop() = 0;//wyciąganie półproduktu z kolejki w zależności od rodzaju kolejki
     virtual PackageQueueType  get_queue_type() = 0; //identyfikacja typu kolejki FIFO/LIFO
@@ -39,7 +39,7 @@ public:
 class PackageQueue : public IPackageQueue {
 public:
     PackageQueue(PackageQueueType type): _queueType(type) {}
-    Package pop() override; //TODO;
+    Package pop() override;
     PackageQueueType get_queue_type() override {return _queueType;}
     void push(Package&&) override;
     std::size_t size() override {return _package_queue.size();}

@@ -7,7 +7,7 @@
 Package PackageQueue::pop() {
     // Wyciąganie elementu z kolejki (usuwanie ze zwracaniem)
     Package result;
-    switch(_queueType) {
+    switch(get_queue_type()) {
 
         case PackageQueueType::LIFO :
             result = std::move(_package_queue.back());
