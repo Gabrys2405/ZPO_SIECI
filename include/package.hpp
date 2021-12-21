@@ -15,12 +15,13 @@ public:
         }
         else if (freed_IDs.empty() && !assigned_IDs.empty()){
             ElementID max_id = *assigned_IDs.begin();
-            for(auto it = std::begin(assigned_IDs);it!= std::end(assigned_IDs);it++){
+            for(auto it = assigned_IDs.begin(); it != assigned_IDs.end(); it++){
                 if(max_id < *it){
                     max_id = *it;
                 }
             }
             _id = max_id + 1;
+            assigned_IDs.insert(_id);
         }
         else if(!freed_IDs.empty()){
             ElementID min_id = *freed_IDs.begin();
