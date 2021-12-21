@@ -42,8 +42,9 @@ public:
         assigned_IDs.erase(_id);
         freed_IDs.insert(_id);
     };
+
 private:
-    ElementID _id;
+    ElementID _id = 0;
     static std::set<ElementID> assigned_IDs; // przydzielone obecnie ID
     static std::set<ElementID> freed_IDs; // kiedyś użyte ale obecnie zwolnione ID
 };

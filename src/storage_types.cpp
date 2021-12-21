@@ -9,6 +9,7 @@ Package PackageQueue::pop() {
     Package result;
     switch(get_queue_type()) {
 
+
         case PackageQueueType::LIFO :
             result = std::move(_package_queue.back());
             _package_queue.pop_back();
