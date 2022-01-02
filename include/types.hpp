@@ -7,6 +7,8 @@
 #include <set>
 #include "storage_types.hpp"
 using ElementID = unsigned int;
+using Time = unsigned int;
+using TimeOffset = unsigned int;
 
 
 
