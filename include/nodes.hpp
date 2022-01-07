@@ -10,11 +10,20 @@
 #include <map>
 #include <optional>
 
+enum class ReceiverType {
+    WORKER, STOREHOUSE
+};
 
 class IPackageReceiver {
 public:
     virtual void receive_package(Package&& p) = 0;
     virtual ElementID get_id() = 0;
+    virtual ReceiverType get_receiver_type() = 0;
+    using const_iterator = IPackageStockpile::const_iterator;
+    virtual const_iterator begin() const = 0;
+    virtual const_iterator cbegin() const = 0;
+    virtual const_iterator end() const = 0;
+    virtual const_iterator cend() const = 0;
 };
 
 class ReceiverPreferences {
@@ -25,7 +34,7 @@ public:
     IPackageReceiver* choose_receiver();
 
     using preferences_t = std::map<IPackageReceiver*, double>;
-    preferences_t& get_preferences();
+    const preferences_t& get_preferences() const;
 
     using const_iterator = preferences_t::const_iterator;
     const_iterator begin() const {return preferences_.cbegin();}
@@ -39,6 +48,7 @@ private:
 
 class PackageSender {
 public:
+    PackageSender() : receiver_preferences_() {}
     PackageSender(PackageSender&& package_sender) = default;
     void send_package();
     std::optional<Package>& get_sending_buffer();
@@ -51,7 +61,7 @@ private:
 };
 
 
-class Ramp {
+class Ramp : public PackageSender {
 public:
     Ramp (ElementID id, TimeOffset di) {_id = id; _di = di;}
     void deliver_goods (Time t);
@@ -63,7 +73,7 @@ private:
     TimeOffset _di = 0;
 };
 
-class Worker {
+class Worker : public PackageSender , public IPackageReceiver {
 public:
     Worker (ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) {_id = id; _pd = pd;}
     void do_work(Time t);
@@ -74,7 +84,8 @@ private:
     TimeOffset _pd;
 };
 
-class Storehouse {
+class Storehouse : public IPackageReceiver {
+public:
     Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d);
 };
 
