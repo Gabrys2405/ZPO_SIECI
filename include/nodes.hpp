@@ -99,7 +99,7 @@ private:
     Time _t = 0;
     TimeOffset _pd;
     std::unique_ptr<IPackageQueue> _queue;
-    std::optional<Package> _buffer;
+    std::optional<Package> _work_buffer;
 
 };
 
