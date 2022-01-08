@@ -16,12 +16,12 @@ bool has_reachable_storehouse(const PackageSender* sender, std::map<const Packag
         return true;
     }
     node_colors[sender] = NodeColor::VISITED;
-    if (sender->receiver_preferences_.get_preferences().empty()){/////TODO Nie wiem czy to tak, muszę mieć nodes
+    if (sender->receiver_preferences_.get_preferences().empty()){\
         throw std::logic_error("Nadawca nie ma zdefiniowanych odbiorców");
 
     }
     bool sender_has_receiver = false;
-    for(auto receiver: sender->receiver_preferences_.get_preferences()) {////TODO To samo co wyżej
+    for(auto receiver: sender->receiver_preferences_.get_preferences()) {
         if(receiver.first->get_receiver_type() == ReceiverType::STOREHOUSE){
             sender_has_receiver = true;
         }
@@ -38,7 +38,7 @@ bool has_reachable_storehouse(const PackageSender* sender, std::map<const Packag
         }
     }
     node_colors[sender] = NodeColor::VERIFIED;
-    if(sender_has_receiver == true){
+    if(sender_has_receiver){
         return true;
     }
     else {
@@ -54,7 +54,7 @@ bool Factory::is_consistent() {
     }
     for(const auto& r: _ramp){
         try{
-            has_reachable_storehouse(&r,enum_node_color);
+            has_reachable_storehouse((PackageSender*) &r, enum_node_color);
             return true;
         }
         catch (const std::logic_error&) {
@@ -65,15 +65,20 @@ bool Factory::is_consistent() {
 
 }
 
-void Factory::do_deliveries(Time) {
-    throw;
-    //TODO 2;
+void Factory::do_deliveries(Time t) {
+    for(auto& r:_ramp){
+        r.deliver_goods(t);
+    }
+
 
 }
 
-void Factory::do_package_passing(void) {
-    throw;
-    //TODO 3;
+void Factory::do_package_passing() {
+    {
+        for(auto& r:_ramp ){
+            r.send_package();
+        }
+    }
 
 }
 

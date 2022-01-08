@@ -58,7 +58,7 @@ protected:
     void push_package(Package&& package);
 
 private:
-
+    std::optional<Package> _buffer;
 };
 
 

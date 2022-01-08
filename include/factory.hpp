@@ -28,7 +28,7 @@ public:
 
     //Wyszukiwanie po ID
     NodeCollection<Node>::iterator find_by_id(ElementID id){return std::find_if(_container.begin(),_container.end(),[id](const auto& i){return id == i.get_id();});}
-    NodeCollection<Node>::iterator find_by_id(ElementID id) const {return std::find_if(_container.cbegin(),_container.cend(),[id](const auto& i){return id == i.get_id();});}
+    NodeCollection<Node>::const_iterator find_by_id(ElementID id) const {return std::find_if(_container.cbegin(),_container.cend(),[id](const auto& i){return id == i.get_id();});}
     //Usuwanie
     void remove_by_id(ElementID id){
         auto iter = find_by_id(id);
