@@ -10,6 +10,7 @@
 
 enum class NodeColor
         { UNVISITED, VISITED, VERIFIED};
+
 template <typename Node>
 class NodeCollection{
 public:
@@ -71,7 +72,7 @@ public:
     NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const {return _worker.find_by_id(id);}
     NodeCollection<Worker>::const_iterator worek_cbegin() const {return _worker.cbegin();}
     NodeCollection<Worker>::const_iterator worker_cend() const {return _worker.cend();}
-
+    //logika biznesowa
     bool is_consistent(void);
     void do_deliveries(Time);
     void do_package_passing(void);

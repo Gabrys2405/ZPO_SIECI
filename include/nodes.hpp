@@ -34,7 +34,7 @@ public:
     IPackageReceiver* choose_receiver();
 
     using preferences_t = std::map<IPackageReceiver*, double>;
-    const preferences_t& get_preferences() const;
+    const preferences_t& get_preferences() const {return _preferences;}
 
     using const_iterator = preferences_t::const_iterator;
     const_iterator begin() const {return _preferences.cbegin();}
@@ -48,8 +48,9 @@ private:
 
 class PackageSender {
 public:
-    PackageSender() : receiver_preferences_() {}
+
     PackageSender(PackageSender&& package_sender) = default;
+    ReceiverPreferences receiver_preferences_;
     void send_package();
     std::optional<Package>& get_sending_buffer();
 
@@ -57,7 +58,7 @@ protected:
     void push_package(Package&& package);
 
 private:
-    ReceiverPreferences receiver_preferences_;
+
 };
 
 
