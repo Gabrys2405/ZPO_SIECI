@@ -6,9 +6,12 @@
 #define ZPO_SIECI_NODES_HPP
 #include "types.hpp"
 #include "helpers.hpp"
+#include "storage_types.hpp"
 #include <memory>
 #include <map>
 #include <optional>
+#include <utility>
+#include <iostream>
 
 enum class ReceiverType {
     WORKER, STOREHOUSE
@@ -28,7 +31,7 @@ public:
 
 class ReceiverPreferences {
 public:
-    ReceiverPreferences(ProbabilityGenerator pg) {};
+    ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : _pg(pg) {};
     void add_receiver(IPackageReceiver* r);
     void remove_receiver(IPackageReceiver* r);
     IPackageReceiver* choose_receiver();
@@ -44,15 +47,16 @@ public:
 
 private:
     preferences_t _preferences;
+    ProbabilityGenerator _pg;
 };
 
 class PackageSender {
 public:
-
+    PackageSender() : _receiver_preferences() {}
     PackageSender(PackageSender&& package_sender) = default;
-    ReceiverPreferences receiver_preferences_;
     void send_package();
-    std::optional<Package>& get_sending_buffer();
+    std::optional<Package>& get_sending_buffer() const {return _buffer;}
+    ReceiverPreferences _receiver_preferences;
 
 protected:
     void push_package(Package&& package);
@@ -64,10 +68,10 @@ private:
 
 class Ramp : public PackageSender {
 public:
-    Ramp (ElementID id, TimeOffset di) {_id = id; _di = di;}
+    Ramp (ElementID id, TimeOffset di) : _id(id), _di(di) {};
     void deliver_goods (Time t);
-    TimeOffset get_delivery_interval() const {return _di;};
-    ElementID get_id() const {return _id;};
+    TimeOffset get_delivery_interval() const {return _di;}
+    ElementID get_id() const {return _id;}
 
 private:
     ElementID _id;
@@ -76,14 +80,14 @@ private:
 
 class Worker : public PackageSender , public IPackageReceiver {
 public:
-    Worker (ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) {_id = id; _pd = pd;}
+    Worker (ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) : _id(id), _pd(pd), _queue(std::move(q)) {};
     void do_work(Time t);
     TimeOffset get_processing_duration() const {return _pd;}
     Time get_package_processing_start_time() const {return _t;}
 
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
-    ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;};
+    ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
 
     const_iterator begin() const override {return _queue->cbegin();}
     const_iterator cbegin() const override {return _queue->cbegin();}
@@ -95,7 +99,7 @@ private:
     Time _t = 0;
     TimeOffset _pd;
     std::unique_ptr<IPackageQueue> _queue;
-    std::optional<Package> _buffer
+    std::optional<Package> _work_buffer;
 
 };
 
@@ -109,10 +113,11 @@ public:
     const_iterator cend() const override {return _queue->cend();}
 
     void receive_package(Package&& p) override;
-    ElementID get_id() const override;
-    ReceiverType get_receiver_type() const override;
+    ElementID get_id() const override {return _id;}
+    ReceiverType get_receiver_type() const override {return ReceiverType::STOREHOUSE;}
 private:
     ElementID _id;
     std::unique_ptr<IPackageStockpile> _queue;
 };
+
 #endif //ZPO_SIECI_NODES_HPP

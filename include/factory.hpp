@@ -59,7 +59,7 @@ public:
     NodeCollection<Ramp>::const_iterator ramp_cend() const {return _ramp.cend();}
     //Storehouse
     void add_storehouse(Storehouse&& str){_storehouse.add(str);}
-    void remove_storehouse(ElementID id){_storehouse.remove_by_id(id);}
+    void remove_storehouse(ElementID id);
     NodeCollection<Storehouse>::iterator find_storehouse_by_id(ElementID id){return _storehouse.find_by_id(id);}
     NodeCollection<Storehouse>::const_iterator find_storehouse_by_id(ElementID id) const {return _storehouse.find_by_id(id);}
     NodeCollection<Storehouse>::const_iterator storehouse_cbegin() const {return _storehouse.cbegin();}
@@ -67,7 +67,7 @@ public:
 
     //worker
     void add_worker(Worker&& wrk){_worker.add(wrk);}
-    void remove_worker(ElementID id){_worker.remove_by_id(id);}
+    void remove_worker(ElementID id);
     NodeCollection<Worker>::iterator find_worker_by_id(ElementID id){return _worker.find_by_id(id);}
     NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const {return _worker.find_by_id(id);}
     NodeCollection<Worker>::const_iterator worek_cbegin() const {return _worker.cbegin();}
