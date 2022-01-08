@@ -69,8 +69,8 @@ class Ramp : public PackageSender {
 public:
     Ramp (ElementID id, TimeOffset di) : _id(id), _di(di) {};
     void deliver_goods (Time t);
-    TimeOffset get_delivery_interval() const {return _di;};
-    ElementID get_id() const {return _id;};
+    TimeOffset get_delivery_interval() const {return _di;}
+    ElementID get_id() const {return _id;}
 
 private:
     ElementID _id;
@@ -86,7 +86,7 @@ public:
 
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
-    ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;};
+    ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
 
     const_iterator begin() const override {return _queue->cbegin();}
     const_iterator cbegin() const override {return _queue->cbegin();}
@@ -98,7 +98,7 @@ private:
     Time _t = 0;
     TimeOffset _pd;
     std::unique_ptr<IPackageQueue> _queue;
-    std::optional<Package> _buffer
+    std::optional<Package> _buffer;
 
 };
 
