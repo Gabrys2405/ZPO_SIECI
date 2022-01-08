@@ -60,7 +60,7 @@ void PackageSender::push_package(Package&& package) {
 
 void PackageSender::send_package() {
     if (_buffer) {
-        _receiver_preferences.choose_receiver()->receive_package(std::move(*_buffer));
+        receiver_preferences_.choose_receiver()->receive_package(std::move(*_buffer));
         _buffer.reset();
     }
 }

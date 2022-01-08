@@ -13,9 +13,10 @@ set(SOURCE_FILES
 set(SOURCES_FILES_TESTS
         test/test_package.cpp
         test/test_storage_types.cpp
+        test/test_nodes.cpp
         )
 
 add_compile_options(-Wall -Wextra -Werror -Wpedantic -pedantic-errors -Wconversion)
 add_executable(ZPO_SIECI main.cpp)
-target_compile_definitions(ZPO_SIECI PUBLIC EXERCISE_ID=EXERCISE_ID_PACKAGE)
+target_compile_definitions(ZPO_SIECI PUBLIC EXERCISE_ID=2)
 include(../SetCommonConfig.cmake)
