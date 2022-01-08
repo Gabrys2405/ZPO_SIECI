@@ -11,6 +11,7 @@
 #include <map>
 #include <optional>
 #include <utility>
+#include <iostream>
 
 enum class ReceiverType {
     WORKER, STOREHOUSE
@@ -55,12 +56,12 @@ public:
     PackageSender(PackageSender&& package_sender) = default;
     void send_package();
     std::optional<Package>& get_sending_buffer() const {return _buffer;}
+    ReceiverPreferences _receiver_preferences;
 
 protected:
     void push_package(Package&& package);
 
 private:
-    ReceiverPreferences _receiver_preferences;
     std::optional<Package> _buffer;
 };
 
