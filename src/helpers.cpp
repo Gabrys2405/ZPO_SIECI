@@ -4,7 +4,6 @@
 
 #include "helpers.hpp"
 
-#include <cstdlib>
 #include <random>
 
 // Do generowania wysokiej jakości ciągów liczb pseudolosowych warto użyć

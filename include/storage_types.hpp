@@ -45,10 +45,10 @@ public:
     std::size_t size() override {return _package_queue.size();}
     bool empty() override {return _package_queue.empty();}
 
-    IPackageStockpile::const_iterator begin() const override {return _package_queue.cbegin();}
-    IPackageStockpile::const_iterator cbegin() const override {return _package_queue.cbegin();}
-    IPackageStockpile::const_iterator end() const override {return _package_queue.cend();}
-    IPackageStockpile::const_iterator cend() const override {return _package_queue.cend();}
+    const_iterator begin() const override {return _package_queue.cbegin();}
+    const_iterator cbegin() const override {return _package_queue.cbegin();}
+    const_iterator end() const override {return _package_queue.cend();}
+    const_iterator cend() const override {return _package_queue.cend();}
 
 private:
     PackageQueueType _queueType;

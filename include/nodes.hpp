@@ -32,7 +32,7 @@ public:
 
 class ReceiverPreferences {
 public:
-    ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : _pg(pg) {};
+    explicit ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : _pg(pg) {};
     void add_receiver(IPackageReceiver* r);
     void remove_receiver(IPackageReceiver* r);
     IPackageReceiver* choose_receiver();
@@ -53,9 +53,9 @@ private:
 
 class PackageSender {
 public:
-    explicit PackageSender() : _buffer() , receiver_preferences_() {};
-
+    explicit PackageSender() :  receiver_preferences_() , _buffer(){};
     PackageSender(PackageSender&&) = default;
+
     void send_package();
     std::optional<Package>& get_sending_buffer() {return _buffer;}
     ReceiverPreferences receiver_preferences_;
