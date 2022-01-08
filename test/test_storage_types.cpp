@@ -2,9 +2,8 @@
 #include "gtest/gtest.h"
 
 #include "../include/package.hpp"
-#include "../include/storage_types.hpp"
+#include"../include/storage_types.hpp"
 #include "../include/types.hpp"
-
 using ::std::cout;
 using ::std::endl;
 
