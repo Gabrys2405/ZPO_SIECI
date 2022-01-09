@@ -27,21 +27,15 @@ void ReceiverPreferences::remove_receiver(IPackageReceiver* r) {
 
 IPackageReceiver* ReceiverPreferences::choose_receiver() {
     double recv = 0.0;
-
-    if (!_preferences.empty()) {
-        IPackageReceiver* choosen;
-        for (auto& preference : _preferences) {
-            recv += preference.second;
-
-            if (_pg() <= recv) {
-                choosen = preference.first;
-            }
-        }
-        return choosen;
-    } else {
-        return 0;
+    double num = _pg();
+    for (auto& preference: _preferences) {
+        recv += preference.second;
+        if(num <= recv)
+            return preference.first;
     }
+    return _preferences.end()->first;
 }
+
 
 
 //PackageSender

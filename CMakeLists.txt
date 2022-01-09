@@ -15,6 +15,7 @@ set(SOURCES_FILES_TESTS
         test/test_package.cpp
         test/test_storage_types.cpp
         test/test_nodes.cpp
+        test/test_Factory.cpp
         )
 
 add_compile_options(-Wall -Wextra -Werror -Wpedantic -pedantic-errors -Wconversion)
