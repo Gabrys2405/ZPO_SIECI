@@ -22,7 +22,6 @@ TEST(WorkerTest, HasBuffer) {
 
     Worker w(1, 2, std::make_unique<PackageQueue>(PackageQueueType::FIFO));
     Time t = 1;
-
     w.receive_package(Package());
     w.do_work(t);
     ++t;

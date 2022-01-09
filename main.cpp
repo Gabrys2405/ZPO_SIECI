@@ -6,6 +6,7 @@
 #include "src/package.cpp"
 #include "src/storage_types.cpp"
 #include "include/package.hpp"
+#include "include/config.hpp"
 #include <iostream>
 
 int main() {
@@ -41,5 +42,6 @@ int main() {
 
     Package aPackage4;
     std::cout << aPackage4.get_id() << std::endl;
+
     return 0;
 }

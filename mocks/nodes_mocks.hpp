@@ -5,7 +5,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#include "../config.hpp"
+#include "../include/config.hpp"
 
 #include "../include/nodes.hpp"
 

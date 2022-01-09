@@ -7,7 +7,7 @@
 #include "types.hpp"
 #include "helpers.hpp"
 #include "storage_types.hpp"
-#include "../config.hpp"
+#include "config.hpp"
 #include <memory>
 #include <map>
 #include <optional>
@@ -57,7 +57,7 @@ public:
     PackageSender(PackageSender&&) = default;
 
     void send_package();
-    std::optional<Package>& get_sending_buffer() {return _buffer;}
+    const std::optional<Package>& get_sending_buffer() const {return _buffer;}
     ReceiverPreferences receiver_preferences_;
 
 protected:
