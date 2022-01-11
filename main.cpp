@@ -9,7 +9,6 @@
 #include "include/config.hpp"
 #include <iostream>
 
-#include <iostream>
 
 int main() {
     PackageQueue Queue(PackageQueueType::LIFO);
