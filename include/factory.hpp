@@ -9,7 +9,8 @@
 
 
 enum class NodeColor
-        { UNVISITED, VISITED, VERIFIED};
+       { UNVISITED, VISITED, VERIFIED};
+
 
 template <typename Node>
 class NodeCollection{

@@ -7,6 +7,8 @@
 #include "types.hpp"
 #include "helpers.hpp"
 #include "storage_types.hpp"
+#include "config.hpp"
+
 #include <memory>
 #include <map>
 #include <optional>
@@ -31,7 +33,7 @@ public:
 
 class ReceiverPreferences {
 public:
-    ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : _pg(pg) {};
+    explicit ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : _pg(pg) {};
     void add_receiver(IPackageReceiver* r);
     void remove_receiver(IPackageReceiver* r);
     IPackageReceiver* choose_receiver();
@@ -52,11 +54,12 @@ private:
 
 class PackageSender {
 public:
-    PackageSender() : _receiver_preferences() {}
-    PackageSender(PackageSender&& package_sender) = default;
+    explicit PackageSender() :  receiver_preferences_() , _buffer(){};
+    PackageSender(PackageSender&&) = default;
+
     void send_package();
-    std::optional<Package>& get_sending_buffer() const {return _buffer;}
-    ReceiverPreferences _receiver_preferences;
+    const std::optional<Package>& get_sending_buffer() const {return _buffer;}
+    ReceiverPreferences receiver_preferences_;
 
 protected:
     void push_package(Package&& package);
@@ -119,5 +122,6 @@ private:
     ElementID _id;
     std::unique_ptr<IPackageStockpile> _queue;
 };
+
 
 #endif //ZPO_SIECI_NODES_HPP

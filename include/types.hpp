@@ -15,5 +15,4 @@ using TimeOffset = unsigned int;
 
 using ProbabilityGenerator = std::function<double()>;
 
-
 #endif //ZPO_SIECI_TYPES_HPP
