@@ -4,9 +4,7 @@
 
 #ifndef ZPO_SIECI_STORAGE_TYPES_HPP
 #define ZPO_SIECI_STORAGE_TYPES_HPP
-#include "../include/package.hpp"
-#include"../src/package.cpp"
-#include"../include/types.hpp"
+#include "package.hpp"
 #include <list>
 #include <utility>
 
@@ -40,7 +38,6 @@ public:
 
 class PackageQueue : public IPackageQueue {
 public:
-
     PackageQueue(PackageQueueType type): _queueType(type) {}
     Package pop() override;
     PackageQueueType get_queue_type() override {return _queueType;}
@@ -56,7 +53,6 @@ public:
 private:
     PackageQueueType _queueType;
     std::list<Package> _package_queue;
-
 };
 
 #endif //ZPO_SIECI_STORAGE_TYPES_HPP

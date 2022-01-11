@@ -8,7 +8,6 @@
 #include "helpers.hpp"
 #include "storage_types.hpp"
 #include "config.hpp"
-
 #include <memory>
 #include <map>
 #include <optional>
@@ -122,6 +121,5 @@ private:
     ElementID _id;
     std::unique_ptr<IPackageStockpile> _queue;
 };
-
 
 #endif //ZPO_SIECI_NODES_HPP
