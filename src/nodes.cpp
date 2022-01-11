@@ -4,9 +4,12 @@
 #include "../include/nodes.hpp"
 
 
+
+
 //ReceiverPreferences
 void ReceiverPreferences::add_receiver(IPackageReceiver* r) {
     double sum_of_prefs = 0.0;
+
     size_t num_of_prefs = _preferences.size() + 1;
     for (auto& preference : _preferences) {
         preference.second = 1 / double(num_of_prefs);
@@ -16,6 +19,7 @@ void ReceiverPreferences::add_receiver(IPackageReceiver* r) {
 }
 
 void ReceiverPreferences::remove_receiver(IPackageReceiver* r) {
+
     size_t num_of_prefs = _preferences.size() - 1;
     if (!_preferences.empty()) {
         _preferences.erase(r);
@@ -35,7 +39,6 @@ IPackageReceiver* ReceiverPreferences::choose_receiver() {
     }
     return _preferences.end()->first;
 }
-
 
 
 //PackageSender

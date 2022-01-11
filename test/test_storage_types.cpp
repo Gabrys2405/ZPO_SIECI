@@ -2,9 +2,8 @@
 #include "gtest/gtest.h"
 
 #include "../include/package.hpp"
-#include "../include/storage_types.hpp"
+#include"../include/storage_types.hpp"
 #include "../include/types.hpp"
-
 using ::std::cout;
 using ::std::endl;
 
@@ -14,6 +13,7 @@ TEST(PackageQueueTest, IsFifoCorrect) {
     q.push(Package(2));
 
     Package p(q.pop());
+
     EXPECT_EQ(p.get_id(), 1);
 
     p = q.pop();
@@ -26,6 +26,7 @@ TEST(PackageQueueTest, IsLifoCorrect) {
     q.push(Package(2));
 
     Package p(q.pop());
+
     EXPECT_EQ(p.get_id(), 2);
 
     p = q.pop();
