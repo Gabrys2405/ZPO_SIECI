@@ -1,6 +1,7 @@
 //
 // Created by majga on 20.12.2021.
 //
+
 #include "../include/factory.hpp"
 
 
@@ -148,5 +149,70 @@ void Factory::remove_worker(ElementID id) {
     } );
 
     _worker.remove_by_id(id);
+
+}
+
+ParsedLineData parse_line(const std::string& line){
+    std::vector<std::string> tokens;
+    std::string token;
+
+    std::istringstream token_stream(line);
+    char delimiter = ' ';
+
+    while (std::getline(token_stream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    std::string elem_type = tokens.front();
+    tokens.erase(tokens.begin());
+    ParsedLineData parsed_data;
+
+
+    if(elem_type == "LINK"){
+        parsed_data.element_type = ElementType::LINK;
+    }
+    else if (elem_type == "WORKER"){
+        parsed_data.element_type = ElementType::WORKEK;
+    }
+    else if (elem_type == "STOREHOUSE"){
+        parsed_data.element_type = ElementType::STOREHOUSE;
+
+    }
+    else if(elem_type == "RAMP"){
+        parsed_data.element_type = ElementType::RAMP;
+    }
+
+
+    for (const auto& pair: tokens){
+            std::istringstream token_one(pair);
+            std::vector<std::string> pairs;
+            std::string token_pair;
+            char delim = '=';
+
+            while (std::getline(token_one, token_pair, delim)) {
+                pairs.push_back(token);
+            }
+            parsed_data.parameters[pairs[0]] = pairs[1];
+
+
+    }
+    return parsed_data;
+}
+
+
+Factory load_factory_structure(std::istream& is){
+    Factory factory;
+    std::string line;
+    while (std::getline(is, line)) {
+        if(line[0] == ';' or line.empty()){ //W pliku wejściowym komentarz zaczyna się od ;
+            continue;
+        }
+
+    }
+    ParsedLineData parseline = parse_line(line);
+    if(parseline.element_type == ElementType::RAMP){
+        throw;//TODO 1
+    }
+
+
 
 }

@@ -6,6 +6,7 @@
 #define ZPO_SIECI_FACTORY_HPP
 #include "types.hpp"
 #include "nodes.hpp"
+#include <sstream>
 
 
 enum class NodeColor
@@ -92,9 +93,23 @@ private:
     NodeCollection<Storehouse> _storehouse;
     NodeCollection<Worker> _worker;
 
-    template<typename Node>
-    void remove_receiver(NodeCollection <Node>& collection, ElementID id);
+
 
 
 };
+
+enum class ElementType{
+    RAMP,WORKEK,STOREHOUSE, LINK
+};
+struct ParsedLineData{
+    ElementType element_type;
+    std::map<std::string,std::string> parameters;
+};
+ParsedLineData parse_line(const std::string& line);
+Factory load_factory_structure(std::istream& is);
+void save_factory_structure(Factory& factory, std::ostream& os);
+
+
+
+
 #endif //ZPO_SIECI_FACTORY_HPP
