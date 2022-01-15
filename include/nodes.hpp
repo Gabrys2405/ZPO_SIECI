@@ -90,6 +90,8 @@ public:
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
     ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
+    std::optional<Package>& get_processing_buffer() const {return _work_buffer;}
+    IPackageQueue* get_queue() const {return _queue.get();}
 
     const_iterator begin() const override {return _queue->cbegin();}
     const_iterator cbegin() const override {return _queue->cbegin();}

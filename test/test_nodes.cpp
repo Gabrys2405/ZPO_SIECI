@@ -158,3 +158,4 @@ TEST(PackageSenderTest, SendPackage) {
     // Upewnij się, że proces wysyłania zachodzi tylko wówczas, gdy w bufor jest pełny.
     sender.send_package();
 }
+
