@@ -3,11 +3,12 @@
 //
 
 #include "include/storage_types.hpp"
-#include "src/package.cpp"
+
 #include "src/storage_types.cpp"
 #include "include/package.hpp"
 #include "include/config.hpp"
 #include <iostream>
+
 
 int main() {
     PackageQueue Queue(PackageQueueType::LIFO);
@@ -42,6 +43,6 @@ int main() {
 
     Package aPackage4;
     std::cout << aPackage4.get_id() << std::endl;
-
     return 0;
 }
+
