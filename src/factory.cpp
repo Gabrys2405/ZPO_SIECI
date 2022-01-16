@@ -178,7 +178,7 @@ ParsedLineData parse_line(const std::string& line){
 
     }
     else if(elem_type == "RAMP"){
-        parsed_data.element_type = ElementType::RAMP;
+        parsed_data.element_type = ElementType::LOADING_RAMP;
     }
 
 
@@ -209,7 +209,7 @@ Factory load_factory_structure(std::istream& is){
 
     }
     ParsedLineData parseline = parse_line(line);
-    if(parseline.element_type == ElementType::RAMP){
+    if(parseline.element_type == ElementType::LOADING_RAMP){
         ElementID id = 0;
         TimeOffset di = 0;
 
@@ -263,9 +263,7 @@ Factory load_factory_structure(std::istream& is){
     }
     else if(parseline.element_type == ElementType::LINK){
         std::string src_type;
-
         std::string dest_type;
-
         ElementID src_id;
         ElementID dest_id;
         for(auto& link_parameters : parseline.parameters){
@@ -322,4 +320,82 @@ Factory load_factory_structure(std::istream& is){
         }
     }
     return factory;
+}
+template <typename Node>
+
+
+void save_factory_structure(Factory& factory, std::ostream& os){
+    if(factory.ramp_cbegin() != factory.ramp_cend()){
+        os << ";== LOADING RAMPS ==" << '\n' << '\n';
+        for (auto ramp = factory.ramp_cbegin(); ramp != factory.ramp_cend(); ramp++){
+            os << "LOADING_RAMP " << "id=" << std::to_string(ramp->get_id())
+            << " delivery_interval= " << std::to_string(ramp->get_delivery_interval())<<'\n';
+
+        }
+
+    }
+    os << '\n';
+    if(factory.worker_cbegin() != factory.worker_cend()){
+        os << ";== WORKERS ==" << '\n' << '\n';
+        for (auto worker = factory.worker_cbegin(); worker != factory.worker_cend(); worker++){
+            os << "WORKER " << "id=" << std::to_string(worker->get_id())
+               << " processing-time= " << std::to_string(worker->get_processing_duration())
+               << " queue-type=";
+            if(worker->get_queue()->get_queue_type() == PackageQueueType::FIFO){
+                os << "FIFO" << '\n';
+            }
+            else if(worker->get_queue()->get_queue_type() == PackageQueueType::LIFO){
+                os << "LIFO" << '\n';
+            }
+        }
+
+    }
+    os << '\n';
+    if (factory.storehouse_cbegin() != factory.storehouse_cend()){
+        os << ";== STOREHOUSES ==" << '\n' << '\n';
+        for(auto storehouse = factory.storehouse_cbegin(); storehouse != factory.storehouse_cend(); storehouse++){
+            os << "STOREHOUSE " << "id=" << std::to_string(storehouse->get_id())<<'\n';
+        }
+
+    }
+    os << '\n';
+    os << ";== LINKS ==" << '\n' << '\n';
+    if (factory.ramp_cbegin() != factory.ramp_cend()){
+        for(auto ramp = factory.worker_cbegin(); ramp != factory.worker_cend(); ramp++ ){
+            for(auto preferences = ramp->receiver_preferences_.get_preferences().rbegin();preferences != ramp->receiver_preferences_.get_preferences().rend();preferences++){
+                os << "LINK " << "src=worker-"
+                   <<ramp->get_id() << " dest=";
+                if(preferences->first->get_receiver_type() == ReceiverType::WORKER){
+                    os << "worker-"<<preferences->first->get_id();
+                }
+                else if(preferences->first->get_receiver_type() == ReceiverType::STOREHOUSE){
+                    os << "store-"<<preferences->first->get_id();
+                }
+                os<<'\n';
+
+            }
+            os << '\n';
+        }
+    }
+
+
+
+
+    if (factory.worker_cbegin() != factory.worker_cend()){
+        for(auto worker = factory.worker_cbegin(); worker != factory.worker_cend(); worker++ ){
+            for(auto preferences = worker->receiver_preferences_.get_preferences().rbegin();preferences != worker->receiver_preferences_.get_preferences().rend();preferences++){
+                os << "LINK " << "src=worker-"
+                <<worker->get_id() << " dest=";
+                if(preferences->first->get_receiver_type() == ReceiverType::WORKER){
+                    os << "worker-"<<preferences->first->get_id();
+                }
+                else if(preferences->first->get_receiver_type() == ReceiverType::STOREHOUSE){
+                    os << "store-"<<preferences->first->get_id();
+                }
+                os<<'\n';
+
+            }
+            os << '\n';
+        }
+    }
 }

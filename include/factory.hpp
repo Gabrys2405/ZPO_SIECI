@@ -71,13 +71,14 @@ public:
     void remove_worker(ElementID id);
     NodeCollection<Worker>::iterator find_worker_by_id(ElementID id){return _worker.find_by_id(id);}
     NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const {return _worker.find_by_id(id);}
-    NodeCollection<Worker>::const_iterator worek_cbegin() const {return _worker.cbegin();}
+    NodeCollection<Worker>::const_iterator worker_cbegin() const {return _worker.cbegin();}
     NodeCollection<Worker>::const_iterator worker_cend() const {return _worker.cend();}
     //logika biznesowa
     bool is_consistent(void);
     void do_deliveries(Time);
     void do_package_passing(void);
     void do_work(Time);
+
 
 
 
@@ -99,7 +100,7 @@ private:
 };
 
 enum class ElementType{
-    RAMP,WORKEK,STOREHOUSE, LINK
+    LOADING_RAMP,WORKEK,STOREHOUSE, LINK
 };
 struct ParsedLineData{
     ElementType element_type;

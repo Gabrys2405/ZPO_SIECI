@@ -95,7 +95,7 @@ public:
     const_iterator cbegin() const override {return _queue->cbegin();}
     const_iterator end() const override {return _queue->cend();}
     const_iterator cend() const override {return _queue->cend();}
-
+    IPackageQueue* get_queue() const{return _queue.get();}
 private:
     ElementID _id;
     Time _t = 0;
