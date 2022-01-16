@@ -5,6 +5,7 @@
 #include "../include/reports.hpp"
 #include "../include/nodes.hpp"
 
+
 std::string queue_to_string(PackageQueueType type) {
     switch (type) {
         case(PackageQueueType::LIFO):
@@ -59,7 +60,7 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
     for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
         os << "WORKER #" << worker->get_id() << "\n";
         os << "  PBuffer: ";
-        if (f.find_worker_by_id(worker->get_id())->get_processing_buffer() != std::nullopt) {
+        if (worker->get_processing_buffer() != std::nullopt) {
             os << "#" << worker->get_processing_buffer()->get_id() << " (pt = " << worker->get_package_processing_start_time() << ")\n";
         } else {
             os << "(empty)\n";
