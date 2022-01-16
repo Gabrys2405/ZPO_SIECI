@@ -90,7 +90,7 @@ public:
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
     ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
-
+    std::optional<Package>& get_processing_buffer() const {return (std::optional<Package>&) _work_buffer;}
     const_iterator begin() const override {return _queue->cbegin();}
     const_iterator cbegin() const override {return _queue->cbegin();}
     const_iterator end() const override {return _queue->cend();}
@@ -101,7 +101,7 @@ private:
     Time _t = 0;
     TimeOffset _pd;
     std::unique_ptr<IPackageQueue> _queue;
-    std::optional<Package> _work_buffer;
+    std::optional<Package> _work_buffer = std::nullopt;
 
 };
 
