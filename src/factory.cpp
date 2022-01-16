@@ -210,9 +210,116 @@ Factory load_factory_structure(std::istream& is){
     }
     ParsedLineData parseline = parse_line(line);
     if(parseline.element_type == ElementType::RAMP){
-        throw;//TODO 1
+        ElementID id = 0;
+        TimeOffset di = 0;
+
+        for(auto& ramps_parameter : parseline.parameters){
+           if (ramps_parameter.first == "id" ){
+               id = static_cast<ElementID>(std::stoi(ramps_parameter.second));
+
+           }
+           else if(ramps_parameter.first == "delivery-interval"){
+               di = static_cast<TimeOffset>(std::stoi(ramps_parameter.second));
+
+           }
+
+        }
+        factory.add_ramp(Ramp(id,di));
     }
+    else if(parseline.element_type == ElementType::STOREHOUSE){
+        ElementID id = 0;
+        for(auto& storehouse_parameter : parseline.parameters){
+            if(storehouse_parameter.first == "id"){
+                id = static_cast<ElementID>(std::stoi(storehouse_parameter.second));
 
+            }
+        }
+        factory.add_storehouse(Storehouse(id));
+    }
+    else if(parseline.element_type == ElementType::WORKEK){
+        ElementID id = 0;
+        TimeOffset pd = 0;
+        PackageQueueType type;
 
+        for(auto& worker_parameters: parseline.parameters){
+            if(worker_parameters.first == "id"){
+                id = static_cast<ElementID>(std::stoi(worker_parameters.second));
 
+            }
+            else if(worker_parameters.first == "processing-time"){
+                pd = static_cast<TimeOffset>(std::stoi(worker_parameters.second));
+            }
+            else if (worker_parameters.first == "queue-type"){
+                if (worker_parameters.second == "FIFO"){
+                    type = PackageQueueType::FIFO;
+                }
+                else if(worker_parameters.second == "LIFO"){
+                    type = PackageQueueType::LIFO;
+                }
+            }
+        }
+        std::unique_ptr<IPackageQueue> ttype = std::make_unique<PackageQueue>(type);
+        factory.add_worker(Worker(id,pd,std::move(ttype)));
+    }
+    else if(parseline.element_type == ElementType::LINK){
+        std::string src_type;
+
+        std::string dest_type;
+
+        ElementID src_id;
+        ElementID dest_id;
+        for(auto& link_parameters : parseline.parameters){
+            if(link_parameters.first == "src"){//Musimy dokonać parsowania
+                std::vector<std::string> tokens;
+                std::string token;
+
+                std::istringstream token_stream(line);
+                char delimiter = '-';
+
+                while (std::getline(token_stream, token, delimiter)) {
+                    tokens.push_back(token);
+                }
+                src_type = tokens[0];
+                src_id = static_cast<ElementID>(std::stoi(tokens[1]));
+
+            }
+            else if (link_parameters.first == "dest"){
+                std::vector<std::string> tokens;
+                std::string token;
+
+                std::istringstream token_stream(line);
+                char delimiter = '-';
+
+                while (std::getline(token_stream, token, delimiter)) {
+                    tokens.push_back(token);
+                }
+                dest_type = tokens[0];
+                dest_id = static_cast<ElementID>(std::stoi(tokens[1]));
+            }
+        }
+        if (src_type == "ramp"){
+            auto ramp = factory.find_ramp_by_id(src_id);
+            if(dest_type == "store"){
+                auto storehouse = factory.find_storehouse_by_id(dest_id);
+                ramp->receiver_preferences_.add_receiver(&(*storehouse));
+            }
+            else if(dest_type == "worker"){
+                auto worker = factory.find_worker_by_id(dest_id);
+                ramp->receiver_preferences_.add_receiver(&(*worker));
+            }
+
+        }
+        else if(src_type == "worker"){
+            auto worker = factory.find_worker_by_id(src_id);
+            if(dest_type == "store"){
+                auto storehouse = factory.find_storehouse_by_id(dest_id);
+                worker->receiver_preferences_.add_receiver(&(*storehouse));
+            }
+            else if(dest_type == "worker"){
+                auto worker1 = factory.find_worker_by_id(dest_id);
+                worker->receiver_preferences_.add_receiver(&(*worker1));
+            }
+        }
+    }
+    return factory;
 }
