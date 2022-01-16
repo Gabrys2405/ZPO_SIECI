@@ -99,7 +99,4 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
             os << "(empty)\n";
         }
     }
-
-
-
 }
