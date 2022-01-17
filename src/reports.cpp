@@ -51,17 +51,34 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
         os << "  Processing time: " << worker->get_processing_duration() << "\n";
         os << "  Queue type: " << queue_to_string(worker->get_queue()->get_queue_type()) << "\n";
         os << "  Receivers:\n";
+        std::vector<ElementID> workers;
+        std::vector<ElementID> stores;
         for (auto rec: worker->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
-
-                os << "    worker #" << rec.first->get_id();
+                workers.push_back(rec.first->get_id());
+                //os << "    worker #" << rec.first->get_id();
 
             } else if(rec.first->get_receiver_type() == ReceiverType::STOREHOUSE){
-                os << "    storehouse #" << rec.first->get_id();
+                stores.push_back(rec.first->get_id());
+                //os << "    storehouse #" << rec.first->get_id();
             }
-            os << '\n';
+
         }
-        os <<'\n';
+        // Sortowanie
+        std::sort(workers.begin(), workers.end());
+        std::sort(stores.begin(), stores.end());
+        if (!workers.empty()) {
+            for (auto w : workers) {
+                os << "    worker #" << w << "\n";
+            }
+        }
+        if (!stores.empty()) {
+            for (auto s : stores) {
+                os << "    storehouse #" << s << "\n";
+            }
+        }
+        os << "\n";
+
     }
     os << "\n== STOREHOUSES ==\n\n";
     for (auto storehouse = f.storehouse_cbegin(); storehouse != f.storehouse_cend(); storehouse++) {

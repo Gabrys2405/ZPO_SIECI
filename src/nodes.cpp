@@ -53,30 +53,13 @@ void PackageSender::send_package() {
 
 
 //Ramp
-void Ramp::deliver_goods (Time t) {
-    if (t % get_delivery_interval()) {
-        Package p;
-        push_package(std::move(p));
-    }
+void Ramp::deliver_goods(Time t) {
+    if(!((t - 1) % _di))
+        push_package(Package());
 }
 
 
 //Worker
-//void Worker::do_work(Time t) {
-//    if (t - get_package_processing_start_time() + 1 == get_processing_duration()) {
-//        if (_work_buffer) {
-//            push_package(std::move(*_work_buffer));
-//            _work_buffer.reset();
-//        }
-//        _work_buffer.emplace(_queue->pop());
-//        _t = t;
-//    } else {
-//        if (!_work_buffer) {
-//            _work_buffer.emplace(_queue->pop());
-//            _t = t;
-//        }
-//    }
-//}
 void Worker::do_work(Time t) {
     if(_t == 0) {
         if(!_queue->empty()){
@@ -94,6 +77,7 @@ void Worker::do_work(Time t) {
         }
     }
 }
+
 
 
 void Worker::receive_package(Package&& p) {
