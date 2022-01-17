@@ -7,6 +7,7 @@
 
 #include <functional>
 #include <random>
+
 #include "types.hpp"
 
 extern std::random_device rd;
