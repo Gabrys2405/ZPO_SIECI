@@ -5,16 +5,25 @@
 #include "../include/reports.hpp"
 #include "../include/nodes.hpp"
 
+#include "../include/factory.hpp"
+
+
 
 std::string queue_to_string(PackageQueueType type) {
+    std::string queue;
     switch (type) {
         case(PackageQueueType::LIFO):
-            return "LIFO";
+            queue = "LIFO";
+            break;
+
         case(PackageQueueType::FIFO):
-            return "FIFO";
+            queue = "FIFO";
+            break;
+
         default:
             break;
     }
+    return queue;
 }
 
 
@@ -23,16 +32,20 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
     for (auto ramp = f.ramp_cbegin(); ramp != f.ramp_cend(); ramp++) {
         os << "LOADING RAMP #" << ramp->get_id() << "\n";
         os << "  Delivery interval: " << ramp->get_delivery_interval() << "\n";
-        os << "  Receivers:\n";
+        os << "  Receivers:" << '\n';
         for (auto rec : ramp->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
-                os << "    worker #" << rec.first->get_id() << "\n";
+                os << "    worker #" << rec.first->get_id() << '\n';
+
             } else {
                 os << "    storehouse #" << rec.first->get_id() << "\n";
             }
+
         }
+        os<<'\n';
+
     }
-    os << "\n\n== WORKERS ==\n\n";
+    os << "\n== WORKERS ==\n\n";
     for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
         os << "WORKER #" << worker->get_id() << "\n";
         os << "  Processing time: " << worker->get_processing_duration() << "\n";
@@ -40,25 +53,29 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
         os << "  Receivers:\n";
         for (auto rec: worker->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
-                os << "    worker #" << rec.first->get_id() << "\n";
-            } else {
-                os << "    storehouse #" << rec.first->get_id() << "\n";
-            }
-        }
-    }
-    os << "\n\n== STOREHOUSES ==\n\n";
-    for (auto storehouse = f.storehouse_cbegin(); storehouse != f.storehouse_cend(); storehouse++) {
-        os << "STOREHOUSE #" << storehouse->get_id() << "\n";
-    }
-    os << "\n";
 
+                os << "    worker #" << rec.first->get_id();
+
+            } else if(rec.first->get_receiver_type() == ReceiverType::STOREHOUSE){
+                os << "    storehouse #" << rec.first->get_id();
+            }
+            os << '\n';
+        }
+        os <<'\n';
+    }
+    os << "\n== STOREHOUSES ==\n\n";
+    for (auto storehouse = f.storehouse_cbegin(); storehouse != f.storehouse_cend(); storehouse++) {
+        os << "STOREHOUSE #" << storehouse->get_id() << '\n';
+        os << '\n';
+    }
 }
 
 void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t) {
     os << "=== [ Turn: " << t << " ] ===\n\n";
-    os << "== WORKERS ==\n\n";
+    os << "== WORKERS ==\n";
     for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
-        os << "WORKER #" << worker->get_id() << "\n";
+        os << "\nWORKER #" << worker->get_id() << "\n";
+
         os << "  PBuffer: ";
         if (worker->get_processing_buffer() != std::nullopt) {
             os << "#" << worker->get_processing_buffer()->get_id() << " (pt = " << worker->get_package_processing_start_time() << ")\n";
@@ -75,7 +92,7 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
             }
             os << "\n";
         } else {
-            os << "(empty)\n";
+            os << "(empty)" << '\n';
         }
         os << "  SBuffer: ";
         if (worker->get_sending_buffer() != std::nullopt) {
@@ -95,9 +112,9 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
                     os << ", ";
                 }
             }
-            os << "\n";
+            os << "\n\n";
         } else {
-            os << "(empty)\n";
+            os << "(empty)\n\n";
         }
     }
 }

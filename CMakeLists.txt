@@ -1,24 +1,24 @@
 cmake_minimum_required(VERSION 3.17)
 project(ZPO_SIECI)
-
 set(PROJECT_ID ZPO_SIECI)
 
 set(SOURCE_FILES
-        src/package.cpp
-        src/nodes.cpp
         src/storage_types.cpp
-        src/helpers.cpp
+        src/package.cpp
         src/factory.cpp
-        src/simulation.cpp src/reports.cpp include/reports.hpp)
-
-add_executable(ZPO_SIECI ${SOURCE_FILES} main.cpp)
-
-
+        src/helpers.cpp
+        src/nodes.cpp
+        src/reports.cpp
+        src/simulation.cpp
+        )
 set(SOURCES_FILES_TESTS
-        test/test_package.cpp
-        test/test_storage_types.cpp
-        test/test_nodes.cpp
-        test/test_Factory.cpp
+#        test/test_package.cpp
+#        test/test_storage_types.cpp
+#        test/test_nodes.cpp
+#        test/test_Factory.cpp
+       # test/test_factory_io.cpp
+        test/test_reports.cpp
+        test/test_simulate.cpp
         )
 
 add_compile_options(-Wall -Wextra -Werror -Wpedantic -pedantic-errors -Wconversion)
@@ -65,4 +65,3 @@ include(../SetCommonConfig.cmake)
 #
 #
 #add_subdirectory(../../googletest-master googletest-master)
-

@@ -8,7 +8,6 @@
 #include "helpers.hpp"
 #include "storage_types.hpp"
 #include "config.hpp"
-
 #include <memory>
 #include <map>
 #include <optional>
@@ -58,14 +57,14 @@ public:
     PackageSender(PackageSender&&) = default;
 
     void send_package();
-    const std::optional<Package>& get_sending_buffer() const {return _buffer;}
+    const std::optional<Package>& get_sending_buffer() const {return (std::optional<Package>&) _buffer;}
     ReceiverPreferences receiver_preferences_;
 
 protected:
     void push_package(Package&& package);
 
 private:
-    std::optional<Package> _buffer;
+    std::optional<Package> _buffer = std::nullopt;
 };
 
 
@@ -87,24 +86,22 @@ public:
     void do_work(Time t);
     TimeOffset get_processing_duration() const {return _pd;}
     Time get_package_processing_start_time() const {return _t;}
-
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
     ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
-    std::optional<Package>& get_processing_buffer() const {return _work_buffer;}
-    IPackageQueue* get_queue() const {return _queue.get();}
+    std::optional<Package>& get_processing_buffer() const {return (std::optional<Package>&) _work_buffer;}
 
     const_iterator begin() const override {return _queue->cbegin();}
     const_iterator cbegin() const override {return _queue->cbegin();}
     const_iterator end() const override {return _queue->cend();}
     const_iterator cend() const override {return _queue->cend();}
-
+    IPackageQueue* get_queue() const{return _queue.get();}
 private:
     ElementID _id;
     Time _t = 0;
     TimeOffset _pd;
     std::unique_ptr<IPackageQueue> _queue;
-    std::optional<Package> _work_buffer;
+    std::optional<Package> _work_buffer = std::nullopt;
 
 };
 
@@ -124,6 +121,5 @@ private:
     ElementID _id;
     std::unique_ptr<IPackageStockpile> _queue;
 };
-
 
 #endif //ZPO_SIECI_NODES_HPP
