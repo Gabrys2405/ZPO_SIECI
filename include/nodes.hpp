@@ -86,7 +86,6 @@ public:
     void do_work(Time t);
     TimeOffset get_processing_duration() const {return _pd;}
     Time get_package_processing_start_time() const {return _t;}
-
     void receive_package(Package&& p) override;
     ElementID get_id() const override {return _id;}
     ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}

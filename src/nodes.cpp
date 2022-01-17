@@ -61,21 +61,39 @@ void Ramp::deliver_goods (Time t) {
 
 
 //Worker
+//void Worker::do_work(Time t) {
+//    if (t - get_package_processing_start_time() + 1 == get_processing_duration()) {
+//        if (_work_buffer) {
+//            push_package(std::move(*_work_buffer));
+//            _work_buffer.reset();
+//        }
+//        _work_buffer.emplace(_queue->pop());
+//        _t = t;
+//    } else {
+//        if (!_work_buffer) {
+//            _work_buffer.emplace(_queue->pop());
+//            _t = t;
+//        }
+//    }
+//}
 void Worker::do_work(Time t) {
-    if (t - get_package_processing_start_time() + 1 == get_processing_duration()) {
-        if (_work_buffer) {
-            push_package(std::move(*_work_buffer));
-            _work_buffer.reset();
-        }
-        _work_buffer.emplace(_queue->pop());
+    if(_t == 0) {
+        if(!_queue->empty()){
         _t = t;
-    } else {
-        if (!_work_buffer) {
-            _work_buffer.emplace(_queue->pop());
+        _work_buffer = _queue->pop();
+        }
+    }
+    if(t - _t + 1 == _pd){
+        push_package(std::move(_work_buffer.value()));
+        _t = 0;
+        _work_buffer.reset();
+        if(!_queue->empty()) {
             _t = t;
+            _work_buffer = _queue->pop();
         }
     }
 }
+
 
 void Worker::receive_package(Package&& p) {
     _queue->push(std::move(p));
