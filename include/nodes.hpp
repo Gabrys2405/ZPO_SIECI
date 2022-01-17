@@ -57,14 +57,14 @@ public:
     PackageSender(PackageSender&&) = default;
 
     void send_package();
-    const std::optional<Package>& get_sending_buffer() const {return _buffer;}
+    const std::optional<Package>& get_sending_buffer() const {return (std::optional<Package>&) _buffer;}
     ReceiverPreferences receiver_preferences_;
 
 protected:
     void push_package(Package&& package);
 
 private:
-    std::optional<Package> _buffer;
+    std::optional<Package> _buffer = std::nullopt;
 };
 
 
