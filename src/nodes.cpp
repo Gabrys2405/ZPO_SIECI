@@ -1,6 +1,7 @@
 //
 // Created by majga on 20.12.2021.
 //
+
 #include "../include/nodes.hpp"
 
 
@@ -104,3 +105,4 @@ void Worker::receive_package(Package&& p) {
 void Storehouse::receive_package(Package&& p) {
     _queue->push(std::move(p));
 }
+

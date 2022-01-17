@@ -9,6 +9,7 @@
 #include "include/config.hpp"
 #include <iostream>
 
+
 int main() {
     PackageQueue Queue(PackageQueueType::LIFO);
     if (Queue.get_queue_type() == PackageQueueType::LIFO) {

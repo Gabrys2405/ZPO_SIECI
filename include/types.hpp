@@ -5,6 +5,7 @@
 #ifndef ZPO_SIECI_TYPES_HPP
 #define ZPO_SIECI_TYPES_HPP
 #include <set>
+
 #include <functional>
 
 using ElementID = unsigned int;
