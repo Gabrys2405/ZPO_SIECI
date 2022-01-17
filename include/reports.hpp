@@ -12,4 +12,5 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
 
 std::string queue_to_string(PackageQueueType type);
 
+
 #endif //ZPO_SIECI_REPORTS_HPP

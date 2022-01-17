@@ -4,6 +4,7 @@
 
 #include "../include/reports.hpp"
 #include "../include/nodes.hpp"
+
 #include "../include/factory.hpp"
 
 
@@ -52,6 +53,7 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
         os << "  Receivers:\n";
         for (auto rec: worker->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
+
                 os << "    worker #" << rec.first->get_id();
 
             } else if(rec.first->get_receiver_type() == ReceiverType::STOREHOUSE){
@@ -66,8 +68,6 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
         os << "STOREHOUSE #" << storehouse->get_id() << '\n';
         os << '\n';
     }
-
-
 }
 
 void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t) {
@@ -75,6 +75,7 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
     os << "== WORKERS ==\n";
     for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
         os << "\nWORKER #" << worker->get_id() << "\n";
+
         os << "  PBuffer: ";
         if (worker->get_processing_buffer() != std::nullopt) {
             os << "#" << worker->get_processing_buffer()->get_id() << " (pt = " << worker->get_package_processing_start_time() << ")\n";
@@ -99,7 +100,6 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
         } else {
             os << "(empty)\n";
         }
-
     }
     os << "\n\n== STOREHOUSES ==\n\n";
     for (auto storehouse = f.storehouse_cbegin(); storehouse != f.storehouse_cend(); storehouse++) {
@@ -115,7 +115,6 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
             os << "\n\n";
         } else {
             os << "(empty)\n\n";
-
         }
     }
 }
