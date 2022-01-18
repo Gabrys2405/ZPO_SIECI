@@ -79,7 +79,6 @@ void Worker::do_work(Time t) {
 }
 
 
-
 void Worker::receive_package(Package&& p) {
     _queue->push(std::move(p));
 }

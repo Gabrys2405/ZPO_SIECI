@@ -67,14 +67,14 @@ void generate_structure_report(const Factory& f, std::ostream& os) {
         // Sortowanie
         std::sort(workers.begin(), workers.end());
         std::sort(stores.begin(), stores.end());
-        if (!workers.empty()) {
-            for (auto w : workers) {
-                os << "    worker #" << w << "\n";
-            }
-        }
         if (!stores.empty()) {
             for (auto s : stores) {
                 os << "    storehouse #" << s << "\n";
+            }
+        }
+        if (!workers.empty()) {
+            for (auto w : workers) {
+                os << "    worker #" << w << "\n";
             }
         }
         os << "\n";
