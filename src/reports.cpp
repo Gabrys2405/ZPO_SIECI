@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 20.12.2021.
 //
@@ -6,7 +7,6 @@
 #include "../include/nodes.hpp"
 
 #include "../include/factory.hpp"
-
 
 
 std::string queue_to_string(PackageQueueType type) {
@@ -28,61 +28,93 @@ std::string queue_to_string(PackageQueueType type) {
 
 
 void generate_structure_report(const Factory& f, std::ostream& os) {
-    os << "\n== LOADING RAMPS ==\n\n";
+    // Sortowanie
+    std::vector<ElementID> ramps;
+    std::vector<ElementID> workers;
+    std::vector<ElementID> stores;
     for (auto ramp = f.ramp_cbegin(); ramp != f.ramp_cend(); ramp++) {
-        os << "LOADING RAMP #" << ramp->get_id() << "\n";
-        os << "  Delivery interval: " << ramp->get_delivery_interval() << "\n";
+        ramps.push_back(ramp->get_id());
+    }
+    for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
+        workers.push_back(worker->get_id());
+    }
+    for (auto store = f.storehouse_cbegin(); store != f.storehouse_cend(); store++) {
+        stores.push_back(store->get_id());
+    }
+    std::sort(ramps.begin(), ramps.end());
+    std::sort(workers.begin(), workers.end());
+    std::sort(stores.begin(), stores.end());
+
+    os << "\n== LOADING RAMPS ==\n\n";
+    for (auto ramp : ramps) {
+        os << "LOADING RAMP #" << f.find_ramp_by_id(ramp)->get_id() << "\n";
+        os << "  Delivery interval: " << f.find_ramp_by_id(ramp)->get_delivery_interval() << "\n";
         os << "  Receivers:" << '\n';
-        for (auto rec : ramp->receiver_preferences_) {
+        std::vector<ElementID> worker_id;
+        std::vector<ElementID> store_id;
+        for (auto rec : f.find_ramp_by_id(ramp)->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
-                os << "    worker #" << rec.first->get_id() << '\n';
+                worker_id.push_back(rec.first->get_id());
+                //os << "    worker #" << rec.first->get_id() << '\n';
 
             } else {
-                os << "    storehouse #" << rec.first->get_id() << "\n";
+                store_id.push_back(rec.first->get_id());
+                //os << "    storehouse #" << rec.first->get_id() << "\n";
             }
-
+        }
+        // Sortowanie
+        std::sort(worker_id.begin(), worker_id.end());
+        std::sort(store_id.begin(), store_id.end());
+        if (!store_id.empty()) {
+            for (auto s : store_id) {
+                os << "    storehouse #" << s << "\n";
+            }
+        }
+        if (!worker_id.empty()) {
+            for (auto w: worker_id) {
+                os << "    worker #" << w << "\n";
+            }
         }
         os<<'\n';
-
     }
+
     os << "\n== WORKERS ==\n\n";
-    for (auto worker = f.worker_cbegin(); worker != f.worker_cend(); worker++) {
-        os << "WORKER #" << worker->get_id() << "\n";
-        os << "  Processing time: " << worker->get_processing_duration() << "\n";
-        os << "  Queue type: " << queue_to_string(worker->get_queue()->get_queue_type()) << "\n";
+    for (auto worker : workers) {
+        os << "WORKER #" << f.find_worker_by_id(worker)->get_id() << "\n";
+        os << "  Processing time: " << f.find_worker_by_id(worker)->get_processing_duration() << "\n";
+        os << "  Queue type: " << queue_to_string(f.find_worker_by_id(worker)->get_queue()->get_queue_type()) << "\n";
         os << "  Receivers:\n";
-        std::vector<ElementID> workers;
-        std::vector<ElementID> stores;
-        for (auto rec: worker->receiver_preferences_) {
+        std::vector<ElementID> workers_ids;
+        std::vector<ElementID> stores_ids;
+        for (auto rec: f.find_worker_by_id(worker)->receiver_preferences_) {
             if (rec.first->get_receiver_type() == ReceiverType::WORKER) {
-                workers.push_back(rec.first->get_id());
+                workers_ids.push_back(rec.first->get_id());
                 //os << "    worker #" << rec.first->get_id();
 
             } else if(rec.first->get_receiver_type() == ReceiverType::STOREHOUSE){
-                stores.push_back(rec.first->get_id());
+                stores_ids.push_back(rec.first->get_id());
                 //os << "    storehouse #" << rec.first->get_id();
             }
 
         }
         // Sortowanie
-        std::sort(workers.begin(), workers.end());
-        std::sort(stores.begin(), stores.end());
-        if (!workers.empty()) {
-            for (auto w : workers) {
-                os << "    worker #" << w << "\n";
-            }
-        }
+        std::sort(workers_ids.begin(), workers_ids.end());
+        std::sort(stores_ids.begin(), stores_ids.end());
         if (!stores.empty()) {
-            for (auto s : stores) {
+            for (auto s : stores_ids) {
                 os << "    storehouse #" << s << "\n";
             }
         }
+        if (!workers.empty()) {
+            for (auto w : workers_ids) {
+                os << "    worker #" << w << "\n";
+            }
+        }
         os << "\n";
-
     }
     os << "\n== STOREHOUSES ==\n\n";
-    for (auto storehouse = f.storehouse_cbegin(); storehouse != f.storehouse_cend(); storehouse++) {
-        os << "STOREHOUSE #" << storehouse->get_id() << '\n';
+    for (auto storehouse : stores) {
+        os << "STOREHOUSE #" << storehouse << '\n';
         os << '\n';
     }
 }
@@ -135,3 +167,4 @@ void generate_simulation_turn_report(const Factory& f, std::ostream& os, Time t)
         }
     }
 }
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)

@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 20.12.2021.
 //
@@ -401,3 +402,4 @@ void save_factory_structure(Factory& factory, std::ostream& os) {
 
 }
 
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)

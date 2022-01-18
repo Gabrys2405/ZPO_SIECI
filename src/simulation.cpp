@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 20.12.2021.
 //
@@ -18,6 +19,4 @@ void simulate(Factory& f ,TimeOffset d,const std::function<void(Factory&, Time)>
     }
 }
 
-
-
-
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)

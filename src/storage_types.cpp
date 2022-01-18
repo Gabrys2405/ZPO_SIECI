@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 19.12.2021.
 //
@@ -31,3 +32,4 @@ void PackageQueue::push(Package&& package) {
     _package_queue.emplace_back(std::move(package));
 }
 
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)

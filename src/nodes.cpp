@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 20.12.2021.
 //
@@ -79,7 +80,6 @@ void Worker::do_work(Time t) {
 }
 
 
-
 void Worker::receive_package(Package&& p) {
     _queue->push(std::move(p));
 }
@@ -90,3 +90,4 @@ void Storehouse::receive_package(Package&& p) {
     _queue->push(std::move(p));
 }
 
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)

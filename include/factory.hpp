@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 20.12.2021.
 //
@@ -85,23 +86,10 @@ public:
     void do_package_passing(void);
     void do_work(Time);
 
-
-
-
-
-
-
-
-
-
-
 private:
     NodeCollection<Ramp> _ramp;
     NodeCollection<Storehouse> _storehouse;
     NodeCollection<Worker> _worker;
-
-
-
 
 };
 
@@ -120,3 +108,4 @@ void save_factory_structure(Factory& factory, std::ostream& os);
 
 
 #endif //ZPO_SIECI_FACTORY_HPP
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
