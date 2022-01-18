@@ -1,3 +1,4 @@
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
 //
 // Created by majga on 19.12.2021.
 //
@@ -48,3 +49,4 @@ private:
     static std::set<ElementID> freed_IDs; // kiedyś użyte ale obecnie zwolnione ID
 };
 #endif //ZPO_SIECI_PACKAGE_HPP
+// 3b: Maciasz (405560), Maj (406094), Łuczak (405699)
